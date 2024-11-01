@@ -4,11 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
+
+import java.util.Iterator;
 
 public class Entity {
 
-    Entity(int x, int y,int w, int h, int maxV, float acceleration, String path){
+    Entity(float x, float y,int w, int h, int maxV, float acceleration, String path){
         this.x = x;
         this.y = y;
         this.w = w;
@@ -21,9 +22,13 @@ public class Entity {
     public float x, y, w, h, maxV;
     public float Vx = 0, Vy = 0, acceleration;
 
-    private Texture image;
+    protected Texture image;
 
     public void update(){
+        update(null);
+    }
+
+    public void update(Iterator<Entity> it){
 
 
         x += Vx * Gdx.graphics.getDeltaTime();
@@ -47,8 +52,8 @@ public class Entity {
     public void render(SpriteBatch sb, ShapeRenderer sr){
 
         sb.draw(image,x,y,w,h);
-        sr.setColor(1,0,0,1);
-        sr.rect(x,y,100,100);
+        //sr.setColor(1,0,0,1);
+        //sr.rect(x,y,100,100);
     }
 
 }
