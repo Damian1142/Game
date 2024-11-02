@@ -13,10 +13,7 @@ import java.util.Iterator;
 public class Entity extends GameObject implements CollideInterface {
 
     public Entity(float x, float y,int w, int h, int maxV, float acceleration, String path){
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
+        super(x,y,w,h);
         this.maxV = maxV;
         this.acceleration = acceleration;
         if (path != null)
@@ -28,11 +25,7 @@ public class Entity extends GameObject implements CollideInterface {
 
     protected TextureRegion image;
 
-    public void update(){
-        update(null);
-    }
-
-    public void update(Iterator<Entity> it){
+    public void update(Iterator<? extends GameObject> it){
 
 
         x += Vx * Gdx.graphics.getDeltaTime();
@@ -51,13 +44,18 @@ public class Entity extends GameObject implements CollideInterface {
             y = 720 - h;
             //Vy = -Vy;
         }
-
+        childUpdate();
     }
-    public void render(SpriteBatch sb, ShapeRenderer sr){
+    public void render(SpriteBatch sb, ShapeRenderer sr,GameObjectInterface parent){
 
-        sb.draw(image,x,y,w,h);
+        if (parent == null){
+            parent = GameObject.zero;
+        }
+
+        sb.draw(image,x + parent.getX(),y + parent.getY(),w,h);
         //sr.setColor(1,0,0,1);
         //sr.rect(x,y,100,100);
+        super.render(sb,sr,this);
     }
 
 
@@ -85,5 +83,11 @@ public class Entity extends GameObject implements CollideInterface {
     @Override
     public float getW() {
         return h;
+    }
+    public void downHp(){
+        hp--;
+    }
+    public void upHp(int hp){
+        this.hp += hp;
     }
 }

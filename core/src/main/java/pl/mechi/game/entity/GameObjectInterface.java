@@ -7,7 +7,7 @@ import pl.mechi.game.colide.CollideInterface;
 public interface GameObjectInterface {
 
     void update();
-    void render(SpriteBatch sb, ShapeRenderer sr);
+    void render(SpriteBatch sb, ShapeRenderer sr,GameObjectInterface parent);
 
     float getX();
     float getY();

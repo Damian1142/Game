@@ -18,6 +18,7 @@ public class SpawnerHandler extends GameObject {
     long time;
 
     public SpawnerHandler(){
+        super(0,0,0,0);
         ase = new ArrayList<>();
         abl = new ArrayList<>();
         players = new ArrayList<>();
@@ -36,9 +37,9 @@ public class SpawnerHandler extends GameObject {
     }
 
     @Override
-    public void render(SpriteBatch sb, ShapeRenderer sr) {
-        abl.forEach(e -> e.render(sb,sr));
-        ase.forEach(e -> e.render(sb,sr));
+    public void render(SpriteBatch sb, ShapeRenderer sr,GameObjectInterface parent) {
+        abl.forEach(e -> e.render(sb,sr,null));
+        ase.forEach(e -> e.render(sb,sr,null));
     }
 
     public void spawnBullet(float x, float y, float xd, float yd){

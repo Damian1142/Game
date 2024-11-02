@@ -1,19 +1,32 @@
 package pl.mechi.game.object;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import pl.mechi.game.entity.GameObjectInterface;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public abstract class GameObject extends ArrayList<GameObjectInterface> implements GameObjectInterface {
+public abstract class GameObject extends ArrayList<GameObject> implements GameObjectInterface {
 
-
+    public static GameObjectInterface zero;
     public float x, y, w, h;
 
-    protected void childUpdate(){
 
+    public GameObject(float x, float y,int w, int h){
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
     }
-    protected void childRender(){
 
+    protected void childUpdate(){
+        for (Iterator<GameObject> it = this.iterator(); it.hasNext();) {
+            it.next().update(it);
+        }
+    }
+    protected void childRender(SpriteBatch sb, ShapeRenderer sr, GameObjectInterface parent){
+        this.forEach(g -> g.render(sb,sr,parent));
     }
 
     @Override
@@ -34,5 +47,48 @@ public abstract class GameObject extends ArrayList<GameObjectInterface> implemen
     @Override
     public float getX() {
         return 0;
+    }
+
+    public void update(){update(null);}
+
+    public void update(Iterator<? extends GameObject> it){
+        childUpdate();
+    }
+    public void render(SpriteBatch sb, ShapeRenderer sr,GameObjectInterface parent){
+
+    }
+
+    static {
+        zero = new GameObjectInterface() {
+            @Override
+            public void update() {
+
+            }
+
+            @Override
+            public void render(SpriteBatch sb, ShapeRenderer sr, GameObjectInterface parent) {
+
+            }
+
+            @Override
+            public float getX() {
+                return 0;
+            }
+
+            @Override
+            public float getY() {
+                return 0;
+            }
+
+            @Override
+            public float getH() {
+                return 0;
+            }
+
+            @Override
+            public float getW() {
+                return 0;
+            }
+        };
     }
 }

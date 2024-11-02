@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import pl.mechi.game.Main;
 import pl.mechi.game.entity.Entity;
+import pl.mechi.game.entity.GameObjectInterface;
 import pl.mechi.game.entity.Player;
 import pl.mechi.game.entity.spawner.SpawnerHandler;
+import pl.mechi.game.object.GameObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,7 +25,7 @@ public class BadMob extends Entity {
     }
 
     @Override
-    public void update(Iterator<Entity> it) {
+    public void update(Iterator<? extends GameObject> it) {
         for (Iterator<Entity> it2 = sh.abl.iterator(); it2.hasNext();) {
             Entity e = it2.next();
             if (e.collide(this)){
@@ -31,6 +33,10 @@ public class BadMob extends Entity {
                 it2.remove();
                 players.get(0).points++;
             }
+        }
+        if (players.get(0).collide(this)){
+            players.get(0).downHp();
+            it.remove();
         }
 
         float mW = 100 * Gdx.graphics.getDeltaTime();
@@ -52,10 +58,5 @@ public class BadMob extends Entity {
             x += xt;
         }
         super.update(it);
-    }
-
-    @Override
-    public void render(SpriteBatch sb, ShapeRenderer sr) {
-        sb.draw(image,x,y);
     }
 }

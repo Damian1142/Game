@@ -3,12 +3,15 @@ package pl.mechi.game.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import pl.mechi.game.Main;
+import pl.mechi.game.GameScreen;
+import pl.mechi.game.entity.bar.BarType;
+import pl.mechi.game.entity.bar.HealthBar;
 import pl.mechi.game.entity.spawner.SpawnerHandler;
+import pl.mechi.game.object.GameObject;
 
 import java.util.Iterator;
 
@@ -18,25 +21,32 @@ public class Player extends Entity implements InputProcessor {
     private TextureRegion tr;
     private SpawnerHandler sh;
     public int points;
+    GameScreen gs;
 
-    public Player( int x, int y, int w, int h, int maxV, float acceleration, SpawnerHandler sh) {
+    public Player( int x, int y, int w, int h, int maxV, float acceleration, SpawnerHandler sh,GameScreen gs) {
         super(x, y, w, h, maxV, acceleration, "shooter.png");
         tr = new TextureRegion(image,0,0,100,100);
         this.sh = sh;
+        this.gs = gs;
         sh.players.add(this);
-        points = 0;
+        points = -1;
+        hp = 3;
+        add(new HealthBar(860,600,this, BarType.PLAYER));
     }
 
     @Override
-    public void render(SpriteBatch sb, ShapeRenderer sr) {
+    public void render(SpriteBatch sb, ShapeRenderer sr, GameObjectInterface parent) {
+
+
 
         float alfa = (float)Math.toDegrees(Math.atan2((y - 720 + my + 55) , (x - mx + 49))) + 90;
 
         sb.draw(tr,x,y,49,55,100,100,1,1, alfa);
+        childRender(sb,sr,this);
     }
 
     @Override
-    public void update(Iterator<Entity> it) {
+    public void update(Iterator<? extends GameObject> it) {
         if (Gdx.input.isKeyPressed(Input.Keys.S) && Vy > -maxV){
             Vy -= acceleration * Gdx.graphics.getDeltaTime() * 10000;
         }else if (Gdx.input.isKeyPressed(Input.Keys.W) && Vy < maxV){
@@ -72,6 +82,9 @@ public class Player extends Entity implements InputProcessor {
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             sh.spawnBullet(x + 49,y + 55,Gdx.input.getX(),720 - Gdx.input.getY());
             //System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
+        }
+        if (hp < 1){
+            gs.endOfGame();
         }
         super.update(it);
     }

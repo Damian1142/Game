@@ -1,16 +1,15 @@
 package pl.mechi.game.entity;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import pl.mechi.game.Main;
+import pl.mechi.game.object.GameObject;
 
 import java.util.Iterator;
 
-public class Bullet extends Entity implements GameObjectInterface{
+public class Bullet extends Entity{
 
     float xd, yd, ay, ax;
 
@@ -27,8 +26,7 @@ public class Bullet extends Entity implements GameObjectInterface{
     }
 
     @Override
-    public void render(SpriteBatch sb, ShapeRenderer sr) {
-
+    public void render(SpriteBatch sb, ShapeRenderer sr,GameObjectInterface parent) {
         float alfa = 0;
 
         if (ay < 0 && ax < 0){
@@ -49,7 +47,7 @@ public class Bullet extends Entity implements GameObjectInterface{
     }
 
     @Override
-    public void update(Iterator<Entity> it) {
+    public void update(Iterator<? extends GameObject> it) {
 
         mW = 2000 * Gdx.graphics.getDeltaTime();
         double xt;

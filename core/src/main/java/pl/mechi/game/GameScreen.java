@@ -1,5 +1,6 @@
 package pl.mechi.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,21 +18,25 @@ import pl.mechi.game.entity.spawner.SpawnerHandler;
 import java.util.ArrayList;
 
 /** First screen of the application. Displayed after the application is created. */
-public class FirstScreen implements Screen {
+public class GameScreen implements Screen {
 
 
     private SpriteBatch batch;
     private FitViewport viewport;
     private ShapeRenderer shape;
     private Texture image;
-    private Player pl;
+    public Player pl;
     private SpawnerHandler sh;
     public static ArrayList<Entity> aee;
     public static ArrayList<GameObjectInterface> ago;
-    public static long gameTime;
+    public long gameTime;
     private long startTime;
     private BitmapFont font;
 
+    private Game game;
+    public GameScreen(Game game){
+        this.game = game;
+    }
 
     @Override
     public void show() {
@@ -41,7 +46,7 @@ public class FirstScreen implements Screen {
         viewport = new FitViewport(1280, 720);
         image = new Texture("libgdx.png");
         sh = new SpawnerHandler();
-        pl = new Player(100,100,100,100, 30, 2.5f, sh);
+        pl = new Player(100,100,100,100, 30, 2.5f, sh, this);
         aee = new ArrayList<>();
         ago = new ArrayList<>();
         viewport.update(1280, 720, true);
@@ -58,14 +63,15 @@ public class FirstScreen implements Screen {
         viewport.apply();
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.setProjectionMatrix(viewport.getCamera().combined);
-        //shape.setProjectionMatrix(viewport.getCamera().combined);
-        //shape.setAutoShapeType(true);
+        shape.setProjectionMatrix(viewport.getCamera().combined);
+        shape.setAutoShapeType(true);
         batch.begin();
-        //shape.begin();
-        sh.render(batch,shape);
-        pl.render(batch, shape);
-        GlyphLayout glyphLayout = new GlyphLayout(font,"Punkty: " + (pl.points + gameTime / 1000));
+        shape.begin();
+        sh.render(batch,shape,null);
+        pl.render(batch, shape, null);
+        GlyphLayout glyphLayout = new GlyphLayout(font,"Points: " + pl.points);
         font.draw(batch,glyphLayout ,640 - glyphLayout.width / 2, 720 - (40 - glyphLayout.height / 2 ));
+        shape.end();
         batch.end();
     }
 
@@ -96,10 +102,17 @@ public class FirstScreen implements Screen {
         image.dispose();
         shape.dispose();
     }
-
+    private long tim1 = 0;
     public void update(){
         gameTime = System.currentTimeMillis() - startTime;
+        if (System.currentTimeMillis() - tim1 > 1000){
+            tim1 = System.currentTimeMillis();
+            pl.points++;
+        }
         sh.update();
         pl.update();
+    }
+    public void endOfGame(){
+        game.setScreen(new EndScreen(this));
     }
 }
