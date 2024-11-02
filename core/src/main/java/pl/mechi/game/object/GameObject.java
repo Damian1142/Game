@@ -2,6 +2,7 @@ package pl.mechi.game.object;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import pl.mechi.game.colide.CollideBox;
 import pl.mechi.game.entity.GameObjectInterface;
 
 import java.util.ArrayList;
@@ -11,13 +12,15 @@ public abstract class GameObject extends ArrayList<GameObject> implements GameOb
 
     public static GameObjectInterface zero;
     public float x, y, w, h;
+    public CollideBox collideBox;
 
 
-    public GameObject(float x, float y,int w, int h){
+    public GameObject(float x, float y,int w, int h,float cx, float cy,int cw, int ch){
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
+        collideBox = new CollideBox(cx,cy,cw,ch);
     }
 
     protected void childUpdate(){

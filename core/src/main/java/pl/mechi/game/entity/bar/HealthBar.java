@@ -17,7 +17,7 @@ public class HealthBar extends GameObject {
 
 
     public HealthBar(float x, float y, Entity parent, BarType type) {
-        super(x, y, 0, 0);
+        super(x, y, 0, 0,0,0,0,0);
         tr1 = new TextureRegion(new Texture("heart_filled.png"),0,0,128,128);
         tr2 = new TextureRegion(new Texture("heart_empty.png"),0,0,128,128);
         this.parent = parent;

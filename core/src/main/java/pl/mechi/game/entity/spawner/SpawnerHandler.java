@@ -18,7 +18,7 @@ public class SpawnerHandler extends GameObject {
     long time;
 
     public SpawnerHandler(){
-        super(0,0,0,0);
+        super(0,0,0,0,0,0,0,0);
         ase = new ArrayList<>();
         abl = new ArrayList<>();
         players = new ArrayList<>();

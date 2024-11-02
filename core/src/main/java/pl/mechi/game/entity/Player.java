@@ -3,7 +3,6 @@ package pl.mechi.game.entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -24,7 +23,7 @@ public class Player extends Entity implements InputProcessor {
     GameScreen gs;
 
     public Player( int x, int y, int w, int h, int maxV, float acceleration, SpawnerHandler sh,GameScreen gs) {
-        super(x, y, w, h, maxV, acceleration, "shooter.png");
+        super(x, y, w, h,x,y,w,h, maxV, acceleration, "shooter.png");
         tr = new TextureRegion(image,0,0,100,100);
         this.sh = sh;
         this.gs = gs;
@@ -42,6 +41,8 @@ public class Player extends Entity implements InputProcessor {
         float alfa = (float)Math.toDegrees(Math.atan2((y - 720 + my + 55) , (x - mx + 49))) + 90;
 
         sb.draw(tr,x,y,49,55,100,100,1,1, alfa);
+
+        //sr.rect(collideBox.x,collideBox.y,collideBox.w,collideBox.h);
         childRender(sb,sr,this);
     }
 

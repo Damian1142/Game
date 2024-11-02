@@ -16,7 +16,7 @@ public class Bullet extends Entity{
     double a, mW = 0;
 
     public Bullet(float x, float y, float xd, float yd) {
-        super(x, y,0, 0, 0, 0,null);
+        super(x, y,32, 32, x, y,32,32,0,0,null);
         this.xd = xd;
         this.yd = yd;
         a = Math.abs(y - this.yd) / Math.abs(x - this.xd);
@@ -70,6 +70,6 @@ public class Bullet extends Entity{
         if (x < 0 || x > 1280 || y < 0 || y > 720){
             it.remove();
         }
-
+        collideBox.setXY(x,y);
     }
 }

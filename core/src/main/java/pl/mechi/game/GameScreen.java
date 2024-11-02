@@ -20,6 +20,7 @@ import java.util.ArrayList;
 /** First screen of the application. Displayed after the application is created. */
 public class GameScreen implements Screen {
 
+    //public static boolean viewColliders = true;
 
     private SpriteBatch batch;
     private FitViewport viewport;

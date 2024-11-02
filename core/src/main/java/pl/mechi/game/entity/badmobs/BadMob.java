@@ -18,23 +18,27 @@ public class BadMob extends Entity {
     private ArrayList<Player> players;
     SpawnerHandler sh;
 
-    public BadMob(float x, float y, int w, int h, int maxV, float acceleration, String path, SpawnerHandler sh) {
-        super(x, y, w, h, maxV, acceleration, path);
+    public BadMob(float x, float y, int w, int h,float cx, float cy,int cw, int ch, int maxV, float acceleration, String path, SpawnerHandler sh, int hp) {
+        super(x, y, w, h,cx,cy,cw,ch, maxV, acceleration, path);
         this.sh = sh;
         players = sh.players;
+        this.hp = hp;
     }
 
     @Override
     public void update(Iterator<? extends GameObject> it) {
         for (Iterator<Entity> it2 = sh.abl.iterator(); it2.hasNext();) {
             Entity e = it2.next();
-            if (e.collide(this)){
-                it.remove();
+            if (e.collideBox.collide(collideBox)){
                 it2.remove();
-                players.get(0).points++;
+                downHp();
+                if(hp < 1) {
+                    it.remove();
+                    players.get(0).points++;
+                }
             }
         }
-        if (players.get(0).collide(this)){
+        if (players.get(0).collideBox.collide(collideBox)){
             players.get(0).downHp();
             it.remove();
         }
@@ -57,6 +61,8 @@ public class BadMob extends Entity {
         } else {
             x += xt;
         }
+
+
         super.update(it);
     }
 }

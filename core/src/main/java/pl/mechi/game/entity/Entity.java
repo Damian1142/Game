@@ -5,20 +5,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import pl.mechi.game.colide.CollideInterface;
+import pl.mechi.game.colide.CollideBox;
 import pl.mechi.game.object.GameObject;
 
 import java.util.Iterator;
 
-public class Entity extends GameObject implements CollideInterface {
+public class Entity extends GameObject {
 
-    public Entity(float x, float y,int w, int h, int maxV, float acceleration, String path){
-        super(x,y,w,h);
+    public Entity(float x, float y,int w, int h,float cx, float cy,int cw, int ch, int maxV, float acceleration, String path){
+        super(x,y,w,h,cx,cy,cw,ch);
         this.maxV = maxV;
         this.acceleration = acceleration;
         if (path != null)
             image = new TextureRegion(new Texture(path),0,0,w,h);
     }
+
     public float maxV;
     public float Vx = 0, Vy = 0, acceleration;
     public int hp;
@@ -44,6 +45,7 @@ public class Entity extends GameObject implements CollideInterface {
             y = 720 - h;
             //Vy = -Vy;
         }
+        collideBox.setXY(x,y);
         childUpdate();
     }
     public void render(SpriteBatch sb, ShapeRenderer sr,GameObjectInterface parent){
@@ -54,15 +56,8 @@ public class Entity extends GameObject implements CollideInterface {
 
         sb.draw(image,x + parent.getX(),y + parent.getY(),w,h);
         //sr.setColor(1,0,0,1);
-        //sr.rect(x,y,100,100);
+        //sr.rect(collideBox.x,collideBox.y,collideBox.w,collideBox.h);
         super.render(sb,sr,this);
-    }
-
-
-    @Override
-    public boolean collide(CollideInterface cl) {
-        //return new Rectangle((int)x,(int)y,(int)w,(int)h).contains(new Rectangle((int)cl.getX(),(int)cl.getY(),(int)cl.getW(),(int)cl.getH()));
-        return x > cl.getX() && x < cl.getX() + cl.getW() && y > cl.getY() && y < cl.getY() + cl.getH();
     }
 
     @Override
@@ -77,12 +72,12 @@ public class Entity extends GameObject implements CollideInterface {
 
     @Override
     public float getH() {
-        return w;
+        return h;
     }
 
     @Override
     public float getW() {
-        return h;
+        return w;
     }
     public void downHp(){
         hp--;

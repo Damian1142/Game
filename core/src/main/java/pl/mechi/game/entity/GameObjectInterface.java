@@ -2,7 +2,6 @@ package pl.mechi.game.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import pl.mechi.game.colide.CollideInterface;
 
 public interface GameObjectInterface {
 

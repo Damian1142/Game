@@ -20,14 +20,12 @@ public class EndScreen implements Screen {
         this.gs = gs;
     }
     private long startTime;
-    private long startTime2;
     @Override
     public void show() {
 
         font = new BitmapFont(Gdx.files.internal("Arial.fnt"));
         font.setUseIntegerPositions(false);
         startTime = System.currentTimeMillis();
-        startTime2 = System.currentTimeMillis() + gs.pl.points * 10;
         batch = new SpriteBatch();
     }
     @Override
