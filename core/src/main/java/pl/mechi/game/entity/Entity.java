@@ -22,7 +22,7 @@ public class Entity extends GameObject {
 
     public float maxV;
     public float Vx = 0, Vy = 0, acceleration;
-    public int hp;
+    public int hp,maxHp;
 
     protected TextureRegion image;
 

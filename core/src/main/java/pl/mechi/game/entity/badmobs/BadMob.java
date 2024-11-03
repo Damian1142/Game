@@ -7,6 +7,8 @@ import pl.mechi.game.Main;
 import pl.mechi.game.entity.Entity;
 import pl.mechi.game.entity.GameObjectInterface;
 import pl.mechi.game.entity.Player;
+import pl.mechi.game.entity.bar.BarType;
+import pl.mechi.game.entity.bar.HealthBar;
 import pl.mechi.game.entity.spawner.SpawnerHandler;
 import pl.mechi.game.object.GameObject;
 
@@ -15,14 +17,16 @@ import java.util.Iterator;
 
 public class BadMob extends Entity {
 
-    private ArrayList<Player> players;
-    SpawnerHandler sh;
+    protected ArrayList<Player> players;
+    protected SpawnerHandler sh;
 
-    public BadMob(float x, float y, int w, int h,float cx, float cy,int cw, int ch, int maxV, float acceleration, String path, SpawnerHandler sh, int hp) {
+    public BadMob(float x, float y, int w, int h,float cx, float cy,int cw, int ch, int maxV, float acceleration, String path, SpawnerHandler sh, int hp, int maxHp) {
         super(x, y, w, h,cx,cy,cw,ch, maxV, acceleration, path);
         this.sh = sh;
         players = sh.players;
         this.hp = hp;
+        this.maxHp = maxHp;
+        add(new HealthBar(x,y + 10 + h,this, BarType.MOB));
     }
 
     @Override
@@ -62,7 +66,8 @@ public class BadMob extends Entity {
             x += xt;
         }
 
-
+        get(0).x = x;
+        get(0).y = y + 10;
         super.update(it);
     }
 }

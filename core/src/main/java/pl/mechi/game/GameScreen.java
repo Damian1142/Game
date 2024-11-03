@@ -25,7 +25,6 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private FitViewport viewport;
     private ShapeRenderer shape;
-    private Texture image;
     public Player pl;
     private SpawnerHandler sh;
     public static ArrayList<Entity> aee;
@@ -45,7 +44,6 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         shape = new ShapeRenderer();
         viewport = new FitViewport(1280, 720);
-        image = new Texture("libgdx.png");
         sh = new SpawnerHandler();
         pl = new Player(100,100,100,100, 30, 2.5f, sh, this);
         aee = new ArrayList<>();
@@ -100,7 +98,6 @@ public class GameScreen implements Screen {
     public void dispose() {
         // Destroy screen's assets here.
         batch.dispose();
-        image.dispose();
         shape.dispose();
     }
     private long tim1 = 0;
@@ -108,6 +105,7 @@ public class GameScreen implements Screen {
         gameTime = System.currentTimeMillis() - startTime;
         if (System.currentTimeMillis() - tim1 > 1000){
             tim1 = System.currentTimeMillis();
+            System.out.println("FPS: " + Gdx.graphics.getFramesPerSecond());
             pl.points++;
         }
         sh.update();

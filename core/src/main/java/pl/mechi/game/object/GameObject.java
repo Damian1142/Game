@@ -58,7 +58,7 @@ public abstract class GameObject extends ArrayList<GameObject> implements GameOb
         childUpdate();
     }
     public void render(SpriteBatch sb, ShapeRenderer sr,GameObjectInterface parent){
-
+        childRender(sb,sr,parent);
     }
 
     static {
