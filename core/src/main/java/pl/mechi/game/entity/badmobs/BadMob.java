@@ -47,7 +47,7 @@ public class BadMob extends Entity {
             it.remove();
         }
 
-        float mW = 100 * Gdx.graphics.getDeltaTime();
+        float mW = maxV * Gdx.graphics.getDeltaTime();
         double xt;
         double ax = x - players.get(0).x;
         double ay = y - players.get(0).y;

@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import pl.mechi.game.GameScreen;
+import pl.mechi.game.screens.GameScreen;
 import pl.mechi.game.entity.bar.BarType;
 import pl.mechi.game.entity.bar.HealthBar;
 import pl.mechi.game.entity.spawner.SpawnerHandler;
@@ -49,44 +49,51 @@ public class Player extends Entity implements InputProcessor {
     @Override
     public void update(Iterator<? extends GameObject> it) {
         if (Gdx.input.isKeyPressed(Input.Keys.S) && Vy > -maxV){
-            Vy -= acceleration * Gdx.graphics.getDeltaTime() * 10000;
+            Vy -= acceleration * Gdx.graphics.getDeltaTime() * 100;
         }else if (Gdx.input.isKeyPressed(Input.Keys.W) && Vy < maxV){
-            Vy += acceleration * Gdx.graphics.getDeltaTime() * 10000;
+            Vy += acceleration * Gdx.graphics.getDeltaTime() * 100;
         } else if (Vy > 0) {
-            Vy -= acceleration * Gdx.graphics.getDeltaTime() * 10000;
+            Vy -= acceleration * Gdx.graphics.getDeltaTime() * 100;
             if (Vy < 0){
                 Vy = 0;
             }
         }else if (Vy != 0){
-            Vy += acceleration * Gdx.graphics.getDeltaTime() * 10000;
+            Vy += acceleration * Gdx.graphics.getDeltaTime() * 100;
             if (Vy > 0){
                 Vy = 0;
             }
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A) && Vx > -maxV){
-            Vx -= acceleration * Gdx.graphics.getDeltaTime() * 10000;
+            Vx -= acceleration * Gdx.graphics.getDeltaTime() * 100;
         }else if (Gdx.input.isKeyPressed(Input.Keys.D) && Vx < maxV){
-            Vx += acceleration * Gdx.graphics.getDeltaTime() * 10000;
+            Vx += acceleration * Gdx.graphics.getDeltaTime() * 100;
         } else if (Vx > 0) {
-            Vx -= acceleration * Gdx.graphics.getDeltaTime() * 10000;
+            Vx -= acceleration * Gdx.graphics.getDeltaTime() * 100;
             if (Vx < 0){
                 Vx = 0;
             }
         }else if (Vx != 0){
-            Vx += acceleration * Gdx.graphics.getDeltaTime() * 10000;
-            if (Vx < 0){
+            Vx += acceleration * Gdx.graphics.getDeltaTime() * 100;
+            if (Vx > 0){
                 Vx = 0;
             }
         }
-
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             sh.spawnBullet(x + 49,y + 55,Gdx.input.getX(),720 - Gdx.input.getY());
             //System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
         }
+        for (Iterator<Entity> it2 = sh.ablb.iterator(); it2.hasNext();) {
+            Entity e = it2.next();
+            if (e.collideBox.collide(collideBox)){
+                it2.remove();
+                downHp();
+            }
+        }
         if (hp < 1){
             gs.endOfGame();
         }
+
         super.update(it);
     }
 

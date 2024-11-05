@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 public class NiggaMob extends BadMob{
     public NiggaMob(float x, float y, SpawnerHandler sh) {
-        super(x, y, 100, 100,x,y,90,100, 25, 2.5f, "nigger.png", sh,1,1);
+        super(x, y, 100, 100,x,y,90,100, 100, 2.5f, "nigger.png", sh,1,1);
     }
 
     @Override

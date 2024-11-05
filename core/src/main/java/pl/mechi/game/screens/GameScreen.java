@@ -1,9 +1,8 @@
-package pl.mechi.game;
+package pl.mechi.game.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -45,7 +44,7 @@ public class GameScreen implements Screen {
         shape = new ShapeRenderer();
         viewport = new FitViewport(1280, 720);
         sh = new SpawnerHandler();
-        pl = new Player(100,100,100,100, 30, 2.5f, sh, this);
+        pl = new Player(100,100,100,100, 150, 9, sh, this);
         aee = new ArrayList<>();
         ago = new ArrayList<>();
         viewport.update(1280, 720, true);

@@ -1,6 +1,7 @@
 package pl.mechi.game.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,12 +14,13 @@ public class Bullet extends Entity{
 
     float xd, yd, ay, ax;
 
-    double a, mW = 0;
+    double a, mW = 0, wMw;
 
-    public Bullet(float x, float y, float xd, float yd) {
+    public Bullet(float x, float y, float xd, float yd, double wMw) {
         super(x, y,32, 32, x, y,32,32,0,0,null);
         this.xd = xd;
         this.yd = yd;
+        this.wMw = wMw;
         a = Math.abs(y - this.yd) / Math.abs(x - this.xd);
         ay = y - this.yd;
         ax = x - this.xd;
@@ -43,13 +45,13 @@ public class Bullet extends Entity{
         //sb.draw(image,x,y,16,16,32,32,1,1,90,0,0,32,32,false,false);
         //sb.draw(tr.getTexture(),x,y);
         //sr.setColor(Color.BLUE);
-        //sr.line(sx,sy,xd,yd);
+        //sr.line(x,y,xd,yd);
     }
 
     @Override
     public void update(Iterator<? extends GameObject> it) {
 
-        mW = 2000 * Gdx.graphics.getDeltaTime();
+        mW = wMw * Gdx.graphics.getDeltaTime();
         double xt;
 
 
