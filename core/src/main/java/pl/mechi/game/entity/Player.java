@@ -45,7 +45,7 @@ public class Player extends Entity implements InputProcessor {
         //sr.rect(collideBox.x,collideBox.y,collideBox.w,collideBox.h);
         childRender(sb,sr,this);
     }
-
+    private long tim1;
     @Override
     public void update(Iterator<? extends GameObject> it) {
         if (Gdx.input.isKeyPressed(Input.Keys.S) && Vy > -maxV){
@@ -80,9 +80,14 @@ public class Player extends Entity implements InputProcessor {
             }
         }
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-            sh.spawnBullet(x + 49,y + 55,Gdx.input.getX(),720 - Gdx.input.getY());
+            sh.spawnBullet(x + 49,y + 55,Gdx.input.getX(),Gdx.graphics.getHeight() - Gdx.input.getY());
             //System.out.println(Gdx.input.getX() + " " + Gdx.input.getY());
+            tim1 = System.currentTimeMillis() + 80;
+        }else if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && System.currentTimeMillis() - tim1 > 200){
+            tim1 = System.currentTimeMillis();
+            sh.spawnBullet(x + 49,y + 55,Gdx.input.getX(),Gdx.graphics.getHeight() - Gdx.input.getY());
         }
+
         for (Iterator<Entity> it2 = sh.ablb.iterator(); it2.hasNext();) {
             Entity e = it2.next();
             if (e.collideBox.collide(collideBox)){
@@ -129,6 +134,8 @@ public class Player extends Entity implements InputProcessor {
 
     @Override
     public boolean touchDragged(int i, int i1, int i2) {
+        mx = i;
+        my = i1;
         return false;
     }
 

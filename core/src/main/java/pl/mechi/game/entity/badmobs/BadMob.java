@@ -37,14 +37,23 @@ public class BadMob extends Entity {
                 it2.remove();
                 downHp();
                 if(hp < 1) {
-                    it.remove();
+                    try {
+                        it.remove();
+                    } catch (Exception ignored) {
+
+                    }
+
                     players.get(0).points++;
                 }
             }
         }
         if (players.get(0).collideBox.collide(collideBox)){
             players.get(0).downHp();
-            it.remove();
+            try {
+                it.remove();
+            }catch (Exception ignored){
+
+            }
         }
 
         float mW = maxV * Gdx.graphics.getDeltaTime();

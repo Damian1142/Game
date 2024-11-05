@@ -74,12 +74,18 @@ public class SpawnerHandler extends GameObject {
                     ase.add(new NiggaMob(apr.get(a).x, apr.get(a).y, this));
                 }
             }
-            if (r < 2 && !apr.isEmpty() && false) {
+            if (r < 2 && !apr.isEmpty()) {
                 int a = random.nextInt(apr.size());
                 ase.add(new ShooterMob(apr.get(a).x, apr.get(a).y, this));
             }
             if (r < 5){
-                apr.add(new PortalAfricaMob(random.nextInt(1000), random.nextInt(600), this));
+                int px,py;
+                do {
+                    px = random.nextInt(1000);
+                    py = random.nextInt(600);
+                } while (Math.sqrt(Math.pow(players.get(0).x - px, 2) + Math.pow(players.get(0).y - py, 2)) < 180);
+                apr.add(new PortalAfricaMob(px, py, this));
+
                 int a = random.nextInt(apr.size());
                 ase.add(new NiggaMob(apr.get(a).x, apr.get(a).y, this));
             }
